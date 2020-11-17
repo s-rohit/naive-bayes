@@ -1,0 +1,41 @@
+\documentclass{article}
+
+% ---- packages and config ---- 
+\usepackage[a4paper, vmargin=4cm]{geometry}
+\usepackage[bookmarks,hidelinks,pdfusetitle]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{fourier,microtype}
+\usepackage[fleqn]{mathtools}
+\usepackage{amsthm,amssymb}
+\usepackage[table, hyperref, x11names]{xcolor}
+\usepackage{enumitem,booktabs,array,tabu,graphicx,tikz}
+\usepackage[style=ieee]{biblatex}
+\hypersetup{pdfstartview=FitH, pdfpagemode=UseNone, pdfpagelayout=OneColumn, pdfcreator={S Rohit} }
+\setcounter{page}{0}
+\setlength{\parindent}{0pt}
+\linespread{1.35}
+\widowpenalty=10000
+\clubpenalty=10000
+\setlength{\mathindent}{0pt}
+\def\[#1\]{\begin{align*}#1\end{align*}}
+\colorlet{HighlightColor}{DodgerBlue4}
+\colorlet{HyperlinkColor}{HighlightColor!90}
+\colorlet{CommentColor}{Azure4}
+\setlist{leftmargin=*,itemsep=0pt}
+\setlist*[itemize]{label=\textcolor{HighlightColor}{\textbullet}}
+\tabulinesep = 4pt
+\tabulinestyle{CommentColor!50}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\K}{\hat{k}}
+\newcommand{\gray}[1]{\textcolor{CommentColor}{#1}}
+\newcommand{\Hyperlink}[2]{\href{#1}{\textcolor{HyperlinkColor}{\underline{#2}}}}
+
+% ---- document ---- 
+\addbibresource{references.bib}
+\begin{document}
+	\input{tex/0-title}
+	\input{tex/1-theory}
+	\input{tex/2-implement}\newpage
+	\input{tex/3-experiment}\newpage
+	\input{tex/4-conclusion} 
+\end{document}

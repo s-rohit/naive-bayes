@@ -1,5 +1,3 @@
-
-
 \section{Theory}
 %================
 
@@ -12,44 +10,44 @@ To do so, the classifier must first have:
 	\item A \textit{training dataset} to learn about the different objects, their labels and possible features.
 	\item A \textit{prediction algorithm} to predict the label of an unknown object given as input.
 \end{enumerate}
+Objects having the same label are said to belong to the same ``class'' of objects.\\
 Depending on the prediction algorithm used, a wide variety of classifiers have been created.
 
-\paragraph{Probabilistic Classifier} a classifier that gives the probability distribution over all labels for a given input. The predicted label for that object then is the label with the highest probability.
+\paragraph{Probabilistic Classifier} a classifier that gives the probability distribution over all possible labels for a given input. The predicted label for that object is then the label with the highest probability.
 
-\paragraph{Confusion Matrix} a tabular representation of how often the system got `confused' between any two labels (mislabelled one as another). Rows represent the actual label of the object tested  and columns represent the predicted labels (or vice-versa). 
+\paragraph{Confusion Matrix} a tabular representation of how often the system got `confused' between objects of any two classes (mislabelled one as another). Rows represent the actual label of the object tested  and columns represent the predicted labels (or vice-versa). 
 Observe that:
 \begin{itemize}[nosep]
-	\item Diagonal elements = number of successful predictions for a particular label
+	\item Diagonal elements = number of successful predictions for a particular class
 	\item Trace of the matrix = total number of successful predictions  
-	\item Row-wise (or column-wise) sum = total number of times an object of that label was tested
+	\item Row-wise (or column-wise) sum = number of times an object of that class was tested
 	\item Total sum = total number of tests performed
 \end{itemize}
-We use these to calulcating the overall and class-wise accuracies in section 3.
 
 
 %-----------------------------
 \subsection{Bayes Classifier}
 %-----------------------------
 Bayes Classifier is a probabilistic classifier that uses Bayes' theorem to find the probability 
-of the given object belonging to a particular label.
+of an object belonging to a particular class.
 That is, given an un-labelled object $\mathbf {x} =(x_{1},\ldots ,x_{n})$ with $n$ features, 
 we use Bayes' theorem to find the \textit{posterior} probabaility $\Pr(C_k\mid\x)$ 
-of object $\x$ having a label $C_k$
+of object $\x$ having the label $C_k$
 
 $$ \Pr(C_k \mid \x) = \frac{\Pr(C_k)\ \Pr(\x \mid C_k)}{ \Pr(\x) } $$
 
 \begin{itemize}[itemsep=2mm, topsep=4mm]
-	\item Label likelihood,
+	\item Likelihood,
 		$\Pr(C_k) = \dfrac
 			{\text{\small number of $C_k$-labelled objects}}
 			{\text{\small total number of objects}}
-		$ in training dataset \hfill \gray{(Discrete Uniform Law)}
-	\item  Evidence (feature) probability,
+		$ in training set \hfill \gray{\small (Discrete Uniform Probability Law)}
+	\item  Evidence probability,
 		$\displaystyle \Pr(\x) = \sum_k \Pr(C_k)\ \Pr(\x \mid C_k)$ 
-		\hfill \gray{(Total Probability Theorem)}\\[-5mm]
+		\hfill \gray{\small (Total Probability Theorem)}\\[-5mm]
 	\item Prior probability,
 		$\displaystyle \Pr(\x \mid C_k) = \prod_{i=1}^{n} \Pr(x_{i} \mid x_{1},\ldots ,x_{i-1},C_{k})$ 
-		\hfill \gray{(Chain Rule in Probability)}
+		\hfill \gray{\small (Chain Rule in Probability)}
 \end{itemize}
 Using this, the predicted label $C_{\K}$ for $\x$ is found by calculating
 $\displaystyle
@@ -81,7 +79,7 @@ $ \boxed{
 
 \subsubsection{Gaussian Na\"ive Bayes}
 %-------------------------------------
-In case of continuous data, we assume that the values of features for the same class follow a Gaussian distribution. Let $\mu_{ki}$ and $\sigma^2_{ki}$ be the mean and variance of values of $i$\textsuperscript{th} feature for class $C_k$.\\
+In case of continuous data, we assume that the values of features for a class follow Gaussian distribution. Let $\mu_{ki}$ and $\sigma^2_{ki}$ be the mean and variance of the values of the $i$\textsuperscript{th} feature of class $C_k$.\\
 Then, we get the probability density \enspace
 $\boxed{
 	p(x_{i} = v_i \mid C_{k}) = 

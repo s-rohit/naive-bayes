@@ -41,7 +41,9 @@ Hence, in this section we will modify the boxed equations to get a working equat
 		&=  \G	\ArgMax\left\{
 			\R		\log \left( \frac{N_k}{|D|} \right) +
 			\G		\sum_{i=1}^{n} \log \big[ \Pr(x_{i} \mid C_{k}) \big]
-			\G	\right\}\\
+			\G	\right\}
+			&&
+			\R 	\text{Frequency } N_k \text{ in training set } D\\
 		%
 		&=  \G	\ArgMax\left\{
 			\R		\log \big(N_k) - \log\big(|D|\big) +
@@ -103,4 +105,4 @@ Hence, we get the working formula $\boxed{\K = \ArgMin\left\{
 		+ \sum_{i=1}^{n} \frac{(v_i - \mu_{ki})^2}{z_{ki}}
 	\right\}}$\par\bigskip
 
-Redefine $z_k = 2\sigma_{ki}^2 + \xi$ \enspace to include smoothing factor $\xi$
+Redefine augmented variance $z_{ki} = 2\sigma_{ki}^2 + \xi$ \enspace to include smoothing factor $\xi$
