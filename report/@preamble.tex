@@ -1,0 +1,100 @@
+% ************ PAGE ************
+\usepackage[a4paper]{geometry}
+\usepackage[bookmarks,hidelinks,pdfusetitle]{hyperref}
+\hypersetup{
+	pdfstartview=FitH,
+	pdfpagemode=UseNone,
+	pdfpagelayout=OneColumn,
+	pdfcreator={S Rohit}
+}
+% \usepackage{nopageno} % remove default page number
+\setcounter{page}{0}
+
+% ************ TEXT ************
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{fourier} % or, 'noto'
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{0.6em}
+\linespread{1.35}
+\widowpenalty=10000
+\clubpenalty=10000
+
+% ********** MATH **********
+\usepackage[fleqn]{mathtools}
+\usepackage{amsthm,amssymb}
+\setlength{\mathindent}{0pt}
+\def\[#1\]{\begin{align*}#1\end{align*}}
+
+% ********** COLORS **********
+\usepackage[table, hyperref, x11names]{xcolor}
+\colorlet {HighlightColor}  {DodgerBlue4}
+\colorlet {TextOnHighlight} {white}
+\colorlet {ErrorColor}      {Firebrick4}
+\colorlet {CommentColor}    {Azure4}
+
+% ********** ELEMENTS **********
+% -------- list --------
+\usepackage{enumitem}
+	\setlist{leftmargin=*,itemsep=0pt}
+	\setlist*[itemize]{label=\textcolor{HighlightColor}{\textbullet}}
+% -------- table --------
+\usepackage{booktabs,array,tabu}
+\tabulinesep = 4pt
+\tabulinestyle{CommentColor!50}
+% -------- graphics --------
+\usepackage{graphicx}
+
+% \usepackage{todonotes}
+% \usepackage{lipsum}
+% \usepackage{verbatim}
+
+% **********  MULTICOL **********
+\usepackage{multicol}
+\newenvironment{twocolumns}{\begin{multicols}{2}\raggedcolumns}{\end{multicols}}
+\setlength{\columnsep}{7mm}
+
+% **********  TIKZ **********
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, shapes, positioning}
+
+% ********** CODE **********
+\usepackage{listings, textcomp}
+\lstdefinelanguage{X}{
+	keywords = {}, % add as
+	keywordsprefix=`,
+	mathescape=true,
+	sensitive=false, % keywords not case-sensitive
+	morecomment=[l]{//}, % l for line comment
+	morecomment=[s]{/*}{*/}, % s for delimted text
+	morestring=[b]", % strings enclosed in double quotes
+	morestring=[b]', % strings enclosed in single quotes
+	% breaklines=true, % enable line-breaks
+	literate={`}{}0 % keywords start with `, but don't print `
+}
+\lstset{
+	showstringspaces=false,
+	columns=flexible,
+	tabsize=3,
+	basicstyle={\small\ttfamily},
+	keywordstyle=\color{HighlightColor},
+	numberstyle=\color{DarkOrange2},
+	commentstyle=\color{CommentColor},
+	stringstyle=\color{Aquamarine4},
+	upquote=true,
+	aboveskip=4pt,
+	belowskip=4pt,
+	language=X,
+	frame=leftline,
+	rulecolor=\color{HighlightColor!80},
+	xleftmargin=12pt,
+	framesep=10pt,
+}
+\usepackage[framemethod=tikz]{mdframed}
+\newmdenv[
+	leftmargin=4pt,innerleftmargin=8pt,
+	skipabove=1ex,innertopmargin=1.25ex,
+	skipbelow=0.25ex,innerbottommargin=0.5ex,
+	linewidth=0.5pt, linecolor=SlateBlue4,
+	topline=false, bottomline=false, rightline=false,
+]{vframe}

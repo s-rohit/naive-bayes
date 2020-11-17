@@ -1,0 +1,94 @@
+
+
+\section{Theory}
+%================
+
+%--------------------
+\subsection{Backgroud}
+%--------------------
+Our goal is to construct a \textbf{classifier} -- a system that accepts an `object' as input and based on certain `features' of the object, attempts to assign a `label' to it.
+To do so, the classifier must first have:
+\begin{enumerate}[label={\roman*)}, nosep, topsep=0pt]
+	\item A \textit{training dataset} to learn about the different objects, their labels and possible features.
+	\item A \textit{prediction algorithm} to predict the label of an unknown object given as input.
+\end{enumerate}
+Depending on the prediction algorithm used, a wide variety of classifiers have been created.
+
+\paragraph{Probabilistic Classifier} a classifier that gives the probability distribution over all labels for a given input. The predicted label for that object then is the label with the highest probability.
+
+\paragraph{Confusion Matrix} a tabular representation of how often the system got `confused' between any two labels (mislabelled one as another). Rows represent the actual label of the object tested  and columns represent the predicted labels (or vice-versa). 
+Observe that:
+\begin{itemize}[nosep]
+	\item Diagonal elements = number of successful predictions for a particular label
+	\item Trace of the matrix = total number of successful predictions  
+	\item Row-wise (or column-wise) sum = total number of times an object of that label was tested
+	\item Total sum = total number of tests performed
+\end{itemize}
+We use these to calulcating the overall and class-wise accuracies in section 3.
+
+
+%-----------------------------
+\subsection{Bayes Classifier}
+%-----------------------------
+Bayes Classifier is a probabilistic classifier that uses Bayes' theorem to find the probability 
+of the given object belonging to a particular label.
+That is, given an un-labelled object $\mathbf {x} =(x_{1},\ldots ,x_{n})$ with $n$ features, 
+we use Bayes' theorem to find the \textit{posterior} probabaility $\Pr(C_k\mid\x)$ 
+of object $\x$ having a label $C_k$
+
+$$ \Pr(C_k \mid \x) = \frac{\Pr(C_k)\ \Pr(\x \mid C_k)}{ \Pr(\x) } $$
+
+\begin{itemize}[itemsep=2mm, topsep=4mm]
+	\item Label likelihood,
+		$\Pr(C_k) = \dfrac
+			{\text{\small number of $C_k$-labelled objects}}
+			{\text{\small total number of objects}}
+		$ in training dataset \hfill \gray{(Discrete Uniform Law)}
+	\item  Evidence (feature) probability,
+		$\displaystyle \Pr(\x) = \sum_k \Pr(C_k)\ \Pr(\x \mid C_k)$ 
+		\hfill \gray{(Total Probability Theorem)}\\[-5mm]
+	\item Prior probability,
+		$\displaystyle \Pr(\x \mid C_k) = \prod_{i=1}^{n} \Pr(x_{i} \mid x_{1},\ldots ,x_{i-1},C_{k})$ 
+		\hfill \gray{(Chain Rule in Probability)}
+\end{itemize}
+Using this, the predicted label $C_{\K}$ for $\x$ is found by calculating
+$\displaystyle
+	\K = \underset{k \in \{1 \dots K\}}{\operatorname{argmax}}\ \bigg\{
+			\Pr(C_k \mid \x)
+		\bigg\}
+$\\[3mm]
+\paragraph{Note} $\Pr(\x)$ remains the same for a given $\x$. Hence we simpify as:
+\[
+	\K  &= \underset{k \in \{1 \dots K\}}{\operatorname{argmax}}\ \bigg\{
+			\Pr(C_k)\ \Pr(\x \mid C_k)
+		\bigg\}\\
+		&= \underset{k \in \{1 \dots K\}}{\operatorname{argmax}}\,\left\{
+			\Pr(C_k) \prod_{i=1}^{n} \Pr(x_{i} \mid x_{1},\ldots ,x_{i-1},C_{k})
+		\right\}
+\]
+\smallskip
+
+\subsubsection{Na\"ive Bayes Classifier}
+%---------------------------------------
+Na\"ive Bayes classifier is a Bayes classifier that computes $\K$ with the assumption that all features of $\x$ are mutually independent, conditional on the class $C_k$.\par
+Under this assumption: $\displaystyle \Pr(x_{i} \mid x_{1},\ldots ,x_{i-1},C_{k}) = \Pr(x_i \mid C_{k})$\par
+Hence, for input $\x = (x_1, \dots, x_n)$ the classifier predicts label $C_{\K}$ where \hfill\ 
+$ \boxed{
+	\K  = \underset{k \in \{1 \dots K\}}{\operatorname{argmax}}\,\left\{
+			\Pr(C_k) \prod_{i=1}^{n} \Pr(x_{i} \mid C_{k})
+		\right\} 
+}$
+
+\subsubsection{Gaussian Na\"ive Bayes}
+%-------------------------------------
+In case of continuous data, we assume that the values of features for the same class follow a Gaussian distribution. Let $\mu_{ki}$ and $\sigma^2_{ki}$ be the mean and variance of values of $i$\textsuperscript{th} feature for class $C_k$.\\
+Then, we get the probability density \enspace
+$\boxed{
+	p(x_{i} = v_i \mid C_{k}) = 
+		\frac1{\sqrt{2\pi\sigma^2_{ki}}}
+		\exp\left\{
+			-\frac{(v_i - \mu_{ki})^2}{2\sigma^2_{ki}}
+		\right\}
+}$\\[2mm]
+For a small fixed $\delta$, \enspace 
+	$\Pr(x_{i} = v_i \pm \delta \mid C_{k}) \;\; \propto\;\;  p(x_{i} = v \mid C_{k})$

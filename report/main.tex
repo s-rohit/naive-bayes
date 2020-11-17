@@ -1,0 +1,16 @@
+\documentclass{article}
+\input{@preamble}
+\usepackage{lipsum}
+
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\K}{\hat{k}}
+\newcommand{\gray}[1]{\textcolor{CommentColor}{#1}}
+\usepackage[style=ieee]{biblatex}
+\addbibresource{references.bib}
+\begin{document}
+	\input{0-title}
+	\input{1-theory}
+	\input{2-implement}\newpage
+	\input{3-experiment}\newpage
+	\input{4-conclusion} 
+\end{document}

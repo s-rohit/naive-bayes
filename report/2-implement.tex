@@ -1,0 +1,106 @@
+\section{Implementation}
+%=======================
+
+The two boxed equations need to be modified before implementing on them on a computer, because:
+\begin{enumerate}%[itemsep=1mm]
+	\item The product of the probabilites would be a very small number (especially for large $n$); and such numbers cannot be accurately stored on a computer as floating points. 
+	If the calculated probability is very small, it may even get approximated to zero!
+	\item A smoothing factor will have to be introduced to improve the classifier's tolerance and also support cases where the observed variance of feature in a class is close to 0.
+	\item Operations like \texttt{exp}, \texttt{pow}, \texttt{sqrt}, etc are usually very resource-intensive. If we can minimize the number of operations by simplifying those equations, removing unecessary constant terms, or calculating some values beforehand, then we can speed up the classifier.
+\end{enumerate}
+Hence, in this section we will modify the boxed equations to get a working equation as follows:
+
+\newcommand{\ArgMax}{{\underset{k \in \{1 \dots K\}}{\operatorname{argmax}}}\,}
+\newcommand{\ArgMin}{{\underset{k \in \{1 \dots K\}}{\operatorname{argmin}}}\,}
+\newcommand{\G}{\color{CommentColor!80}}
+\newcommand{\R}{\normalcolor}
+\[
+	\K  &= \ArgMax\left\{
+				\Pr(C_k) 
+				\prod_{i=1}^{n} \Pr(x_{i} \mid C_{k}) 
+			\right\}
+			&& 
+			\text{\gray{Boxed-eqn-1}}\\
+		%
+		&=  \G	 \ArgMax\left\{
+			\R		\log \left[
+			\R			\Pr(C_k) 
+			\R			\prod_{i=1}^{n} \Pr(x_{i} \mid C_{k}) 
+			\R		\right] 
+			\G	\right\}
+			&& 
+			\R 	\log(\cdot) \text{ is a monotonic function}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\R		\log \big[ \Pr(C_k) \big] +
+			\R		\sum_{i=1}^{n} \log \big[ \Pr(x_{i} \mid C_{k}) \big]
+			\G	\right\}
+			&&
+			\R 	\text{Simplifying}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\R		\log \left( \frac{N_k}{|D|} \right) +
+			\G		\sum_{i=1}^{n} \log \big[ \Pr(x_{i} \mid C_{k}) \big]
+			\G	\right\}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\R		\log \big(N_k) - \log\big(|D|\big) +
+			\G		\sum_{i=1}^{n} \log \big[ \Pr(x_{i} \mid C_{k}) \big]
+			\G	\right\}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\R		\log \big(N_k\big) +
+			\G		\sum_{i=1}^{n} \log \big[ \Pr(x_{i} \mid C_{k}) \big]
+			\G	\right\}
+			&&
+			\R 	\text{removing $|D|$ constant}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\G		\log \big(N_k\big) +
+			\R		\sum_{i=1}^{n} \log \left[ 
+						\frac1{\sqrt{2\pi\sigma^2_{ki}}}
+						\exp\left\{
+							-\frac{(v_i - \mu_{ki})^2}{2\sigma^2_{ki}}
+						\right\}
+					\right]
+			\G	\right\}
+			&&
+			\R 	\text{Using boxed-eqn-2}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\G		\log \big(N_k\big)
+			\R		- \sum_{i=1}^{n} \left[
+						\frac12 \log \big( 2\sigma^2_{ki} \big) + \frac{\log(\pi)}2 +
+						\frac{(v_i - \mu_{ki})^2}{2\sigma^2_{ki}}
+					\right]
+			\G	\right\}
+			&&
+			\R 	\text{Simplifying}\\
+		%
+		&=  \G	\ArgMax\left\{
+			\R		\log \big(N_k\big)
+					- \sum_{i=1}^{n} \left[
+						\frac12 \log \big(z_{ki}\big) + 
+						\frac{(v_i - \mu_{ki})^2}{z_{ki}}
+					\right]
+				\right\}
+			&&
+			\R 	\text{Simplify \& take } z_{ki} = 2\sigma_{ki}^2\\
+		%
+		&=  \R	\ArgMin\left\{
+				\underbrace{
+					- \log \big(N_k\big)
+					+ \sum_{i=1}^{n} \left[ \frac12 \log \big( z_{ki} \big) \right]
+				}_{= m_k, \text{ constant for class }C_k}
+					+ \sum_{i=1}^{n} \left[ \frac{(v_i - \mu_{ki})^2}{z_{ki}} \right]
+				\right\}
+			&&
+			 	\text{Reorganizing}
+\]
+
+Hence, we get the working formula $\boxed{\K = \ArgMin\left\{
+		m_k
+		+ \sum_{i=1}^{n} \frac{(v_i - \mu_{ki})^2}{z_{ki}}
+	\right\}}$\par\bigskip
+
+Redefine $z_k = 2\sigma_{ki}^2 + \xi$ \enspace to include smoothing factor $\xi$

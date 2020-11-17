@@ -1,0 +1,38 @@
+\thispagestyle{empty}
+
+\begin{tikzpicture}
+	\linespread{1}
+	\node (logo) at (1,0) 
+		{\includegraphics[height=3.5em]{fig/logo.pdf}};
+	\node[anchor=east, text width=10cm, align=right] (date) at (\textwidth,-1mm) 
+		{November 2020};
+	\node[anchor=west, text width=10cm, inner xsep = 2mm] (course) at (logo.east) 
+		{{\small IIT-GOA CS-561}\\\textbf{Probability \& Statistics}};
+	\node[text width = \textwidth, align=center, anchor=north west, outer ysep=5mm] (title) 
+		at ([yshift=-8mm] logo.south west) {\Large\bfseries\scshape Naive Bayes Classifier};
+	\draw[line width=0.75pt] (title.north west) -- (title.north east);
+	\draw[line width=0.75pt] (title.south west) -- (title.south east);
+	\node[text width = \textwidth, align=center, anchor=north, outer sep=5mm] at (title.south)
+		{	---\enspace \textbf{Rohit S}\enspace ---\\%
+			\texttt{\footnotesize <\,rohit2013107@iitgoa.ac.in\,>}%
+		};
+\end{tikzpicture}
+\vspace{5mm}
+
+\begin{center}
+	\textbf{Abstract}
+\end{center}
+\vspace{-1em}
+\qquad The project report discusses the concept and implementation 
+of \textit{Na\"ive Bayes Classifier} --- a fast and simple classifier that uses Bayes' theorem 
+under the assumption that all features are mutually independent for a given class.
+Then, the results of testing one such (Guassian) Na\"ive Bayes Classifier against 
+an EMNIST dataset of A--Z handwritten alphabets are presented.\\
+Python codes for the above classifier are provided at\enspace \url{https://github.com/s-rohit/naive-bayes}\par\medskip
+\textbf{Keywords}: machine learning, data mining, probabilistic classifier, Bayesian network models
+\par\vspace{1cm}
+
+\tableofcontents
+
+
+\clearpage
