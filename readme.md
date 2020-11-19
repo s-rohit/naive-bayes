@@ -17,11 +17,11 @@ The project report is attached as a PDF along with its LaTeX source files.
 ## Code
 Codes for the above classifier are available in Python and C++.
 
-1. **NaiveBayes class**: `NaiveBayes.hpp` / `NaiveBayes.cpp`  
+1. **NaiveBayes class**: `NaiveBayes.hpp` / `NaiveBayes.py`  
 	Gaussian Naive Bayes classifier that can work with almost any dataset.  
 	Highly scalable and optimized for parallel processing.
 
-2. **Driver program:** `main.cpp` / `main.py`
+2. **Driver program:** `main.cpp` / `main.py`  
 	A driver program to test the NaiveBayes class against the above dataset.  
 	Path to the dataset must be provided as command-line argument.
 
@@ -46,4 +46,4 @@ python3 main.py path/to/dataset.csv  # displays accuracy, visualizations, & conf
 
 ## Also includes,
 1. Screenshot of the execution of these codes on a Linux platform.
-2. Outputs (accuracy, visualizations, & confusion matrix) of one such experiment as PNG.
+2. Outputs (mean, variance, & confusion matrix) of one such experiment as PNG.
